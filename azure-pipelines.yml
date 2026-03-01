@@ -1,0 +1,33 @@
+trigger: none
+
+pool: Default
+
+stages:
+  - stage: TerraformInstaller
+    displayName: Init
+    jobs:
+      - job: TerraformInstaller
+        displayName: InstallerJob
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+
+      - job: InitValidatePlan
+        displayName: TerraformWorkFlow
+        dependsOn: TerraformInstaller
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Env'
+            backendServiceArm: 'ABC'
+            backendAzureRmStorageAccountName: 'teststg07'
+            backendAzureRmContainerName: 'test123'
+            backendAzureRmKey: 'tushar.tfstate'
+
+        
+
+
+          
