@@ -26,6 +26,19 @@ stages:
             backendAzureRmStorageAccountName: 'teststg07'
             backendAzureRmContainerName: 'test123'
             backendAzureRmKey: 'tushar.tfstate'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Env'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Env'
+            environmentServiceNameAzureRM: 'ABC'
+        
+          
 
         
 
